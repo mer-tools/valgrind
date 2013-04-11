@@ -2,7 +2,7 @@
 Summary: Tool for finding memory management bugs in programs
 Name: valgrind
 Version: 3.8.1
-Release: 2
+Release: 3
 Source0: http://www.valgrind.org/downloads/%{name}-%{version}.tar.bz2
 Patch1:	0001-valgrind-3.7.0-cachegrind-improvements.patch
 Patch2:	0002-valgrind-3.7.0-openat.patch
@@ -10,6 +10,7 @@ Patch3:	0003-valgrind-3.7.0-helgrind-race-supp.patch
 Patch4:	0004-valgrind-3.7.0-stat_h.patch
 Patch5:	0005-valgrind-3.7.0-capget.patch
 Patch6:	0006-valgrind-3.7.0-pie.patch
+Patch7:	0007-Fix-for-ARM-thumb-compilation.patch
 License: GPLv2
 URL: http://www.valgrind.org/
 Group: Development/Debuggers
@@ -55,6 +56,7 @@ or valgrind plugins.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 
 %build
 %ifarch %arm
