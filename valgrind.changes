@@ -1,3 +1,7 @@
+* Thu Apr 2013 Juha Kallioinen <juha.kallioinen@jollamobile.com> - 3.8.1-2
+- Update valgrind to 3.8.1
+- Fix for ARM thumb compilation
+
 * Fri Aug 10 2012 Denis Mingulov <denis@mingulov.com> - 3.8.0
 - Updated to valgrind 3.8.0
 - Already merged upstream and obsolete patches are removed
