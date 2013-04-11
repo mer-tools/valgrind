@@ -327,6 +327,7 @@ Int VG_(load_ELF)(Int fd, const HChar* name, /*MOD*/ExeInfo* info)
    /* The kernel maps position-independent executables at TASK_SIZE*2/3;
       duplicate this behavior as close as we can. */
    if (e->e.e_type == ET_DYN && ebase == 0) {
+      ESZ(Addr) hacky_load_address;
       ebase = VG_PGROUNDDN(info->exe_base 
                            + (info->exe_end - info->exe_base) * 2 / 3);
       /* We really don't want to load PIEs at zero or too close.  It
@@ -336,10 +337,11 @@ Int VG_(load_ELF)(Int fd, const HChar* name, /*MOD*/ExeInfo* info)
          nonpointers.  So, hackily, move it above 1MB. */
       /* Later .. is appears ppc32-linux tries to put [vdso] at 1MB,
          which totally screws things up, because nothing else can go
-         there.  So bump the hacky load addess along by 0x8000, to
-         0x108000. */
-      if (ebase < 0x108000)
-         ebase = 0x108000;
+         there.  The size of [vdso] is around 2 or 3 pages, so bump
+         the hacky load addess along by 8 * VKI_PAGE_SIZE to be safe.  */
+      hacky_load_address = 0x100000 + 8 * VKI_PAGE_SIZE;
+      if (ebase < hacky_load_address)
+	ebase = hacky_load_address;
    }
 
    info->phnum = e->e.e_phnum;
